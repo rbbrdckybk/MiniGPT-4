@@ -52,7 +52,7 @@ if you have 12GB+ of VRAM:
 llama_model: "wangrongsheng/MiniGPT-4-LLaMA-7B"
 ```
 
-**[7]** Download and reference the pretrained MiniGPT-4 checkpoint:
+**[7]** Download and reference the pretrained MiniGPT-4 checkpoint (links provided by official repo here @ [step 3](https://github.com/Vision-CAIR/MiniGPT-4#installation)):
 
 if you have 24GB+ of VRAM, [download this checkpoint](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view?usp=share_link).
 

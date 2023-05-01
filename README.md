@@ -37,7 +37,7 @@ Note that if you get an error while installing pycocotools on Windows, you may n
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
 
-**[6]** Prepare your own weights by following step 2 instructions [here](https://github.com/Vision-CAIR/MiniGPT-4#installation). 
+**[6]** Prepare your own weights by following the official instructions (step 2) [here](https://github.com/Vision-CAIR/MiniGPT-4#installation). This involves waiting for your access request to be approved, then downloading ~200GB of LLaMA weights, and then using the Vicuna toolset to prepare working weights.
 
 **-OR-** simply reference these pre-prepared weights by opening **minigpt4/configs/models/minigpt4.yaml** & edit line 16:
 

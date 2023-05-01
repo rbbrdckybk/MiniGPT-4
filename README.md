@@ -1,6 +1,6 @@
 # MiniGPT-4
 
-Simplified local setup of MiniGPT-4 running in an Anaconda environment.
+Simplified local setup of [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4) running in an Anaconda environment.
 
 # Requirements
 

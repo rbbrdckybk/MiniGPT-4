@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 Note that if you get an error while installing pycocotools on Windows, you may need to install the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). See [this issue](https://github.com/cocodataset/cocoapi/issues/169#issuecomment-724622726) for more information.
 
-**[5]** Install pytorch:
+**[5]** Install PyTorch:
 ```
 conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 ```

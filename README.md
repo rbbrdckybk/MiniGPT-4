@@ -76,7 +76,8 @@ Skip this step entirely if you're on Linux!
 
 # Usage
 
-Run the gradio demo to verify that everything works:
+Run the official gradio demo to verify that everything works:
 ```
 python demo.py --cfg-path eval_configs/minigpt4_eval.yaml --gpu-id 0
 ```
+Note that several large files will be downloaded on the first run.

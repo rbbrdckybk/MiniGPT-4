@@ -4,7 +4,7 @@ Simplified local setup of [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4) 
 
 # Requirements
 
-You'll need an Nvidia GPU with at least 12GB of VRAM. These instructions were tested on a Windows 10 machine with an Nvidia 3080Ti GPU, but should work on Linux as well (not tested).
+You'll need an Nvidia GPU with at least 12GB of VRAM (24GB+ is preferred). These instructions were tested on a Windows 10 machine with an Nvidia 3080Ti GPU, but should work on Linux as well (not tested).
 
 # Setup
 

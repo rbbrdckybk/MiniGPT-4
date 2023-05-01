@@ -32,7 +32,7 @@ cd MiniGPT-4
 curl -L -o requirements.txt -C - "https://raw.githubusercontent.com/rbbrdckybk/MiniGPT-4/main/requirements.txt"
 pip install -r requirements.txt
 ```
-Note that if you get an error while installing pycocotools on Windows, you may need to install the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+Note that if you get an error while installing pycocotools on Windows, you may need to install the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/). See [this issue](https://github.com/cocodataset/cocoapi/issues/169#issuecomment-724622726) for more information.
 
 **[5]** Prepare your own weights by following step 2 instructions [here](https://github.com/Vision-CAIR/MiniGPT-4#installation). 
 

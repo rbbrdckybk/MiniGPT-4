@@ -32,10 +32,11 @@ cd MiniGPT-4
 curl -L -o requirements.txt -C - "https://raw.githubusercontent.com/rbbrdckybk/MiniGPT-4/main/requirements.txt"
 pip install -r requirements.txt
 ```
+Note that if you get an error while installing pycocotools on Windows, you may need to install the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 
 **[5]** Prepare your own weights by following step 2 instructions [here](https://github.com/Vision-CAIR/MiniGPT-4#installation). 
 
-**-OR-** simply reference these pre-prepared weights by opening **minigpt4/configs/models/minigpt4.yaml** end editing line 16:
+**-OR-** simply reference these pre-prepared weights by opening **minigpt4/configs/models/minigpt4.yaml** & edit line 16:
 
 if you have 24GB+ of VRAM:
 ```
@@ -77,4 +78,3 @@ Run the gradio demo:
 ```
 python demo.py --cfg-path eval_configs/minigpt4_eval.yaml --gpu-id 0
 ```
-

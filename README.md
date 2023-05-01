@@ -69,6 +69,8 @@ ckpt: 'prerained_minigpt4_7b.pth'
 pip uninstall bitsandbytes
 pip install git+https://github.com/Keith-Hon/bitsandbytes-windows.git
 ```
+You'll also need to place [this DLL](https://github.com/DeXtmL/bitsandbytes-win-prebuilt/blob/main/libbitsandbytes_cuda116.dll) into your **[Anaconda root directory]\envs\textgen\lib\site-packages\bitsandbytes** folder.
+
 Skip this step entirely if you're on Linux!
 
 

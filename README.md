@@ -80,4 +80,4 @@ Run the official gradio demo to verify that everything works:
 ```
 python demo.py --cfg-path eval_configs/minigpt4_eval.yaml --gpu-id 0
 ```
-Note that several large files (>10GB) will be downloaded on the first run.
+Note that several large files (10GB+) will be downloaded on the first run.

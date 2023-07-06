@@ -2,6 +2,8 @@
 
 Simplified local setup of [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4) running in an Anaconda environment. Fixes for various Windows OS issues are provided, as well as links to pre-prepared Vicuna weights.
 
+I've also included a simple MiniGPT-4 server that you can run locally that will respond to API requests, along with an example client that demonstrates how to interact with it.
+
 # Requirements
 
 You'll need an Nvidia GPU with at least 12GB of VRAM (24GB+ is preferred). These instructions were tested on a Windows 10 machine with an Nvidia 3080Ti GPU, but should work on Linux as well (not tested).
@@ -78,6 +80,15 @@ You'll also need to place [this DLL](https://github.com/DeXtmL/bitsandbytes-win-
 
 Skip this step entirely if you're on Linux!
 
+**[9]** (optional) Download my simple API server & client implementation: I've removed gradio and set MiniGPT-4 up as a simple Flask server that you can run locally to handle API requests. I've also coded a simple client example so you can see how to interact with it.
+```
+pip install Flask
+curl -L -o api-server.py -C - "https://raw.githubusercontent.com/rbbrdckybk/MiniGPT-4/main/api-server.py"
+curl -L -o api-client-example.py -C - "https://raw.githubusercontent.com/rbbrdckybk/MiniGPT-4/main/api-client-example.py"
+mkdir img
+curl -L -o img/simpsons.jpg -C - "https://raw.githubusercontent.com/rbbrdckybk/MiniGPT-4/main/img/simpsons.jpg"
+```
+See below for usage instructions!
 
 # Usage
 
@@ -86,3 +97,13 @@ Run the official gradio demo to verify that everything works:
 python demo.py --cfg-path eval_configs/minigpt4_eval.yaml --gpu-id 0
 ```
 Note that several large files (~15GB total) will be downloaded on the first run.
+
+If you downloaded my API server & client in step 9 (verify that the official gradio demo works properly before continuing!), you can test them by starting the server with:
+```
+python api-server.py
+```
+Once the server is running, you can start the client with:
+```
+python api-client-example.py
+```
+You should see the client send the example image (img/simpsons.jpg) to the server and ask MiniGPT-4 several questions about it. Import the **MiniGPT4_Client** class from api-client-example.py into your own projects to easily interact with MiniGPT-4!

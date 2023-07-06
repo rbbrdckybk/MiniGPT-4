@@ -2,6 +2,8 @@
 
 Simplified local setup of [MiniGPT-4](https://github.com/Vision-CAIR/MiniGPT-4) running in an Anaconda environment. Fixes for various Windows OS issues are provided, as well as links to pre-prepared Vicuna weights.
 
+I've also included a simple MiniGPT-4 server that you can run locally that will respond to API requests, along with an example client that demonstrates how to interact with it.
+
 # Requirements
 
 You'll need an Nvidia GPU with at least 12GB of VRAM (24GB+ is preferred). These instructions were tested on a Windows 10 machine with an Nvidia 3080Ti GPU, but should work on Linux as well (not tested).

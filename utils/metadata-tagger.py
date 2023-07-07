@@ -250,7 +250,13 @@ def sanitize_keywords(keywords):
                 k = k.strip()
                 if k == 'a' or k == 'in' or k == 'with' or k == 'the' or k == 'and':
                     k = ''
-                if k == 'for' or k == 'not':
+                if k == 'for' or k == 'not' or k == 'of' or k == '1.' or k == 'context':
+                    k = ''
+                if k == 'no' or k == 'setting' or k == 'colors' or k == 'color' or k == 'quality':
+                    k = ''
+                if k == 'focal' or k == 'appropriate' or k == 'image' or k == 'this':
+                    k = ''
+                if k == 'an':
                     k = ''
 
                 if k != '':

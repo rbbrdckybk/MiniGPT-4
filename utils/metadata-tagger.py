@@ -94,6 +94,54 @@ def log(msg):
     with open('metadata-tagger-log.txt', 'a', encoding = 'utf-8') as f:
         f.write(msg + '\n')
 
+# common replacements to both title/description
+def sanitize_common(str):
+    # common things to remove at the start of text responses
+    if str.startswith('The image is of '):
+        str = str.replace('The image is of ', '')
+    if str.startswith('The image shows '):
+        str = str.replace('The image shows ', '')
+    if str.startswith('The image depicts '):
+        str = str.replace('The image depicts ', '')
+    if str.startswith('This image shows '):
+        str = str.replace('This image shows ', '')
+    if str.startswith('This image depicts '):
+        str = str.replace('This image depicts ', '')
+    if str.startswith('The painting is of '):
+        str = str.replace('The painting is of ', '')
+    if str.startswith('The painting shows '):
+        str = str.replace('The painting shows ', '')
+    if str.startswith('The painting depicts '):
+        str = str.replace('The painting depicts ', '')
+    if str.startswith('This painting shows '):
+        str = str.replace('This painting shows ', '')
+    if str.startswith('This painting depicts '):
+        str = str.replace('This painting depicts ', '')
+    if str.startswith('This is an image of '):
+        str = str.replace('This is an image of ', '')
+    if str.startswith('This is a painting of '):
+        str = str.replace('This is a painting of ', '')
+    if str.startswith('This image features '):
+        str = str.replace('This image features ', '')
+    if str.startswith('The image is '):
+        str = str.replace('The image is ', '')
+    if str.startswith('This image is '):
+        str = str.replace('This image is ', '')
+    if str.startswith('The painting is '):
+        str = str.replace('The painting is ', '')
+    if str.startswith('This painting is '):
+        str = str.replace('This painting is ', '')
+    if str.startswith('Image of a '):
+        str = str.replace('Image of a ', '')
+
+    # common things to replace/remove
+    str = str.replace('<Img>', '')
+    str = str.replace('</Img>', '')
+    str = str.replace('<img>', '')
+    str = str.replace('</img>', '')
+
+    return str
+
 # for sanitizing MiniGPT-4 output
 def sanitize_title(title):
     if '"' in title:
@@ -104,13 +152,20 @@ def sanitize_title(title):
         temp = title.split('>', 1)[1]
         if '<' in temp:
             title = temp.split('<', 1)[0]
-    if title.startswith('Image of a '):
-        title = title.replace('Image of a ', '')
+
+    title = sanitize_common(title)
     if title.startswith('Title: '):
         title = title.replace('Title: ', '')
+
     title = title.strip()
     if title.endswith('.'):
         title = title[:-1]
+
+    # capitalize just the first letter; leave rest of title intact
+    if ' ' in title:
+        temp = title.split(' ', 1)
+        title = temp[0].capitalize() + ' ' + temp[1]
+
     return title
 
 def sanitize_description(description):
@@ -120,41 +175,9 @@ def sanitize_description(description):
     description = description.capitalize()
 
     # remove some common MiniGPT-4 extra wordiness
-    if description.startswith('The image shows '):
-        description = description.replace('The image shows ', '')
-    if description.startswith('The image depicts '):
-        description = description.replace('The image depicts ', '')
-    if description.startswith('The image is '):
-        description = description.replace('The image is ', '')
-    if description.startswith('This image shows '):
-        description = description.replace('This image shows ', '')
-    if description.startswith('This image depicts '):
-        description = description.replace('This image depicts ', '')
-    if description.startswith('This image is '):
-        description = description.replace('This image is ', '')
-    if description.startswith('The painting shows '):
-        description = description.replace('The painting shows ', '')
-    if description.startswith('The painting depicts '):
-        description = description.replace('The painting depicts ', '')
-    if description.startswith('The painting is '):
-        description = description.replace('The painting is ', '')
-    if description.startswith('This painting shows '):
-        description = description.replace('This painting shows ', '')
-    if description.startswith('This painting depicts '):
-        description = description.replace('This painting depicts ', '')
-    if description.startswith('This painting is '):
-        description = description.replace('This painting is ', '')
-    if description.startswith('This is an image of '):
-        description = description.replace('This is an image of ', '')
-    if description.startswith('This is a painting of '):
-        description = description.replace('This is a painting of ', '')
-    if description.startswith('This image features '):
-        description = description.replace('This image features ', '')
+    description = sanitize_common(description)
     if description.startswith('Description: '):
         description = description.replace('Description: ', '')
-
-    description = description.replace('<img>', '')
-    description = description.replace('</img>', '')
 
     # capitalize every sentence
     sentences = description.split('. ')
@@ -177,6 +200,8 @@ def sanitize_description(description):
 def sanitize_keywords(keywords):
     keywords = answer.split(',')
     final_keywords = []
+
+    # remove/sanitize unwanted keywords
     for kw in keywords:
         if kw.endswith('.'):
             kw = kw[:-1]
@@ -215,6 +240,25 @@ def sanitize_keywords(keywords):
         if kw != '':
             final_keywords.append(kw)
     final_keywords = [*set(final_keywords)]
+
+    # break multi-word keywords into single words
+    temp = []
+    for kw in final_keywords:
+        if ' ' in kw:
+            p = kw.split(' ')
+            for k in p:
+                k = k.strip()
+                if k == 'a' or k == 'in' or k == 'with' or k == 'the' or k == 'and':
+                    k = ''
+                if k == 'for' or k == 'not':
+                    k = ''
+
+                if k != '':
+                    temp.append(k)
+        else:
+            temp.append(kw)
+    final_keywords = [*set(temp)]
+
     return final_keywords
 
 
@@ -241,7 +285,7 @@ if __name__ == '__main__':
             client = minigpt4.MiniGPT4_Client()
             r = client.server_reset()
             if response_success(r):
-                initial_direction = 'You are a metadata generation machine designed to help describe images. Your responses will be used verbatim in image metadata and should not be conversational. '
+                initial_direction = 'You are a metadata generation machine designed to help describe images. Your responses will be used verbatim in image metadata and should not be conversational. Respond with only the answer and no context around why the answer is appropriate. '
                 log('\nNote: The following initial direction is prepended to all server requests to help guide output: ')
                 log(initial_direction)
                 # iterate through .jpg images in specified directory

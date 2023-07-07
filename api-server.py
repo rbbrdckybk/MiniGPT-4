@@ -159,7 +159,8 @@ def upload_file():
             print('Error: upload attempt with empty file found in POST request!')
             return jsonify({ "success": False, "message": "Empty file found in POST request..." })
         else:
-            filename = secure_filename(file.filename)
+
+            filename = secure_filename(os.path.basename(file.filename))
             full_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(full_path)
             msg = chat.upload_img(full_path)

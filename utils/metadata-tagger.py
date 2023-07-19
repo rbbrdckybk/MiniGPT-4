@@ -133,6 +133,10 @@ def sanitize_common(str):
         str = str.replace('This painting is ', '')
     if str.startswith('Image of a '):
         str = str.replace('Image of a ', '')
+    if str.startswith('Image content: '):
+        str = str.replace('Image content: ', '')
+    if str.startswith('Image: '):
+        str = str.replace('Image: ', '')
 
     # common things to replace/remove
     str = str.replace('<Img>', '')
@@ -154,6 +158,8 @@ def sanitize_title(title):
             title = temp.split('<', 1)[0]
 
     title = sanitize_common(title)
+    if title.startswith('Image Title: '):
+        title = title.replace('Image Title: ', '')
     if title.startswith('Title: '):
         title = title.replace('Title: ', '')
 
@@ -176,6 +182,8 @@ def sanitize_description(description):
 
     # remove some common MiniGPT-4 extra wordiness
     description = sanitize_common(description)
+    if description.startswith('Image Description: '):
+        description = description.replace('Image Description: ', '')
     if description.startswith('Description: '):
         description = description.replace('Description: ', '')
 
@@ -207,6 +215,10 @@ def sanitize_keywords(keywords):
             kw = kw[:-1]
 
         kw = kw.lower()
+        if kw.endswith('.'):
+            kw = kw[:-1]
+        if kw.endswith("'s"):
+            kw = kw[:-2]
         kw = kw.replace('keywords: ', '')
         kw = kw.replace('keyword: ', '')
         kw = kw.replace('keywords', '')
@@ -222,8 +234,11 @@ def sanitize_keywords(keywords):
         kw = kw.replace('visual interest', '')
         kw = kw.replace('additional information', '')
         kw = kw.replace('visually appealing', '')
+        kw = kw.replace('details', '')
+        kw = kw.replace('detail', '')
         kw = kw.replace('</img>', '')
         kw = kw.replace('<img>', '')
+        kw = kw.replace('eye-catching', '')
 
         kw = kw.replace(' appearance', '')
         kw = kw.replace(' element', '')
@@ -256,7 +271,9 @@ def sanitize_keywords(keywords):
                     k = ''
                 if k == 'focal' or k == 'appropriate' or k == 'image' or k == 'this':
                     k = ''
-                if k == 'an':
+                if k == 'an' or k == 'or' or k == '-' or k == 'on' or k == 'image:':
+                    k = ''
+                if k == 'are':
                     k = ''
 
                 if k != '':

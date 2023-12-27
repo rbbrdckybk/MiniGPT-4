@@ -36,7 +36,7 @@ pyyaml==6.0
 regex==2022.10.31
 tokenizers==0.13.2
 tqdm==4.64.1
-transformers==4.28.0
+transformers==4.36.0
 timm==0.6.13
 spacy==3.5.1
 webdataset==0.2.48
